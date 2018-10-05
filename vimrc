@@ -9,6 +9,7 @@ set showmatch	 "highlight matching parentheses
 set incsearch	 "show the result of search inmediately
 set hlsearch	 "highlight the result
 set encoding=utf-8  "setting for YCM
+set foldmethod=syntax	"set the fold function method to fold by syntax of
 
 "keymap settings
 "differences between map,nnoremap,inoremap,vnoremap
@@ -21,12 +22,21 @@ nnoremap <leader>h :sp
 nnoremap <leader>w :w<CR>
 "stop highlighting
 nnoremap <leader>H :nohl<CR>
-"matching parentheses
-inoremap ( ()<LEFT>
-inoremap [ []<LEFT>
-inoremap { {}<LEFT>
-inoremap " ""<LEFT>
-inoremap ' ''<LEFT>
+""matching parentheses
+"inoremap ( ()<LEFT>
+"inoremap [ []<LEFT>
+"inoremap { {}<LEFT>
+"inoremap " ""<LEFT>
+"inoremap ' ''<LEFT>
+"tab settings
+nnoremap <leader>1 :1gt
+nnoremap <leader>2 :2gt
+nnoremap <leader>3 :3gt
+nnoremap <leader>c zc
+nnoremap <leader>o zo
+"settings for singleCompile
+nmap <F9> :SCCompile<cr>
+nmap <F10> :SCCompileRun<cr>
 
 "some basic configure
 set nocompatible        " close compatible mode
@@ -70,9 +80,9 @@ let g:NERDTreeIndicatorMapCustom = {
 set laststatus=2	"used to configure lightline
 set noshowmode		"hide the mode because lightline has included it
 
-"autoPairs settings
-let g:AutoPairsFlyMode = 0
-let g:AutoPairsShortcutBackInsert = '<M-b>'
+""autoPairs settings
+"let g:AutoPairsFlyMode = 0
+"let g:AutoPairsShortcutBackInsert = '<M-b>'
 
 "YCM settings
 let g:ycm_semantic_triggers =  {
@@ -80,11 +90,19 @@ let g:ycm_semantic_triggers =  {
 			\ 'cs,lua,javascript': ['re!\w{2}'],
 			\ }
 let g:ycm_global_ycm_extra_conf = '/home/karlh/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+let g:ycm_seed_identifiers_with_syntax=1
+let g:ycm_complete_in_comments = 1
+let g:ycm_complete_in_strings = 1
 set completeopt=longest,menu	"set the menu
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif		"close menu as changed from insert to norm
 "color of the bar
 highlight PMenu ctermfg=0 ctermbg=242 guifg=black guibg=darkgrey
 highlight PMenuSel ctermfg=242 ctermbg=8 guifg=darkgrey guibg=black
+"something called gutter
+set scl="no"
+
+"java complete settings"
+autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
 "
 "Above is customized by Karl-Han
@@ -133,15 +151,21 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'majutsushi/tagbar'
 "Plugin YCM
 "https://github.com/Valloric/YouCompleteMe
-"Plugin 'Valloric/YouCompleteMe'
-Plugin 'file:///home/karlh/.vim/bundle/YouCompleteMe'
-"Plguin tern_for_vim
+Plugin 'Valloric/YouCompleteMe'
+"Plugin 'file:///home/karlh/.vim/bundle/YouCompleteMe'
+"Plugin tern_for_vim
 Plugin 'ternjs/tern_for_vim'
 "Plugin pair branket
-Plugin 'file:///home/karlh/.vim/bundle/auto-pair'
+"Plugin 'file:///home/karlh/.vim/bundle/auto-pair'
 "Plugin 'jiangmiao/auto-pair'
 "Plugin vim-startify
 Plugin 'mhinz/vim-startify'
+"Plugin 'artur-shaik/vim-javacomplete2'
+Plugin 'artur-shaik/vim-javacomplete2'
+"Plugin 'xuhdev/SingleCompile'
+Plugin 'xuhdev/SingleCompile'
+"Plugin 'othree/xml.vim'
+Plugin 'othree/xml.vim'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -157,3 +181,41 @@ filetype plugin indent on    " required
 "
 " see :h vundle for more details or wiki for FAQ
 " Put your non-Plugin stuff after this line
+"Auto pair parentheses and other things
+function! AutoPair(open, close)
+        let line = getline('.')
+        if col('.') > strlen(line) || line[col('.') - 1] == ' '
+                return a:open.a:close."\<ESC>i"
+        else
+                return a:open
+        endif
+endf
+
+function! ClosePair(char)
+        if getline('.')[col('.') - 1] == a:char
+                return "\<Right>"
+        else
+                return a:char
+        endif
+endf
+
+function! SamePair(char)
+        let line = getline('.')
+        if col('.') > strlen(line) || line[col('.') - 1] == ' '
+                return a:char.a:char."\<ESC>i"
+        elseif line[col('.') - 1] == a:char
+                return "\<Right>"
+        else
+                return a:char
+        endif
+endf
+
+inoremap ( <c-r>=AutoPair('(', ')')<CR>
+inoremap ) <c-r>=ClosePair(')')<CR>
+inoremap { <c-r>=AutoPair('{', '}')<CR>
+inoremap } <c-r>=ClosePair('}')<CR>
+inoremap [ <c-r>=AutoPair('[', ']')<CR>
+inoremap ] <c-r>=ClosePair(']')<CR>
+inoremap " <c-r>=SamePair('"')<CR>
+inoremap ' <c-r>=SamePair("'")<CR>
+inoremap ` <c-r>=SamePair('`')<CR>
