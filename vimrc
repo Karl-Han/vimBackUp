@@ -93,6 +93,8 @@ let g:ycm_global_ycm_extra_conf = '/home/karlh/.vim/bundle/YouCompleteMe/.ycm_ex
 let g:ycm_seed_identifiers_with_syntax=1
 let g:ycm_complete_in_comments = 1
 let g:ycm_complete_in_strings = 1
+let g:ycm_collect_identifiers_from_tags_files=1
+"let g:ycm_autoclose_preview_window_after_completion = 1
 set completeopt=longest,menu	"set the menu
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif		"close menu as changed from insert to norm
 "color of the bar
@@ -100,6 +102,9 @@ highlight PMenu ctermfg=0 ctermbg=242 guifg=black guibg=darkgrey
 highlight PMenuSel ctermfg=242 ctermbg=8 guifg=darkgrey guibg=black
 "something called gutter
 set scl="no"
+
+"enable rainbow
+let g:rainbow_active = 1
 
 "java complete settings"
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
@@ -166,6 +171,12 @@ Plugin 'artur-shaik/vim-javacomplete2'
 Plugin 'xuhdev/SingleCompile'
 "Plugin 'othree/xml.vim'
 Plugin 'othree/xml.vim'
+"delimit
+Plugin 'Raimondi/delimitMate'
+"rainbow bracket
+Plugin 'luochen1990/rainbow'
+"indent line
+Plugin 'Yggdroot/indentLine'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -209,13 +220,3 @@ function! SamePair(char)
                 return a:char
         endif
 endf
-
-inoremap ( <c-r>=AutoPair('(', ')')<CR>
-inoremap ) <c-r>=ClosePair(')')<CR>
-inoremap { <c-r>=AutoPair('{', '}')<CR>
-inoremap } <c-r>=ClosePair('}')<CR>
-inoremap [ <c-r>=AutoPair('[', ']')<CR>
-inoremap ] <c-r>=ClosePair(']')<CR>
-inoremap " <c-r>=SamePair('"')<CR>
-inoremap ' <c-r>=SamePair("'")<CR>
-inoremap ` <c-r>=SamePair('`')<CR>
