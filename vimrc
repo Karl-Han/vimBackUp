@@ -10,6 +10,9 @@ set incsearch	 "show the result of search inmediately
 set hlsearch	 "highlight the result
 set encoding=utf-8  "setting for YCM
 set foldmethod=syntax	"set the fold function method to fold by syntax of
+set viminfo='100,n$HOME/.vim/files/info/viminfo
+"set list lcs=tab:\¦\ 
+set gcr=a:block-blinkon0
 
 "keymap settings
 "differences between map,nnoremap,inoremap,vnoremap
@@ -34,6 +37,7 @@ nnoremap <leader>2 :2gt
 nnoremap <leader>3 :3gt
 nnoremap <leader>c zc
 nnoremap <leader>o zo
+nnoremap <leader>sudo :w !sudo tee %
 "settings for singleCompile
 nmap <F9> :SCCompile<cr>
 nmap <F10> :SCCompileRun<cr>
@@ -89,10 +93,12 @@ let g:ycm_semantic_triggers =  {
 			\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
 			\ 'cs,lua,javascript': ['re!\w{2}'],
 			\ }
-let g:ycm_global_ycm_extra_conf = '/home/karlh/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+let g:ycm_global_ycm_extra_conf = '/home/karlhan/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
 let g:ycm_seed_identifiers_with_syntax=1
-let g:ycm_complete_in_comments = 1
+let g:ycm_complete_in_comments = 0
 let g:ycm_complete_in_strings = 1
+let g:ycm_collect_identifiers_from_tags_files=1
+"let g:ycm_autoclose_preview_window_after_completion = 1
 set completeopt=longest,menu	"set the menu
 autocmd InsertLeave * if pumvisible() == 0|pclose|endif		"close menu as changed from insert to norm
 "color of the bar
@@ -103,6 +109,9 @@ set scl="no"
 
 "java complete settings"
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
+
+"enable rainbow
+let g:rainbow_active = 1
 
 "
 "Above is customized by Karl-Han
@@ -124,7 +133,7 @@ Plugin 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
 " Plugin 'L9'
 " Git plugin not hosted on GitHub
-Plugin 'git://git.wincent.com/command-t.git'
+"Plugin 'git://git.wincent.com/command-t.git'
 " git repos on your local machine (i.e. when working on your own plugin)
 "Plugin 'file:///home/gmarik/path/to/plugin'
 "
@@ -134,30 +143,22 @@ Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Install L9 and avoid a Naming conflict if you've already installed a
 " different version somewhere else.
 " Plugin 'ascenator/L9', {'name': 'newL9'}
-"
+
 "Plugin added by Karl-Han
 "Plugin ctrlp
 Plugin 'ctrlpvim/ctrlp.vim'
 "Plugin lightline
-"https://github.com/itchyny/lightline.vim
 Plugin 'itchyny/lightline.vim'
 "Plugin nerdtree
-"https://github.com/scrooloose/nerdtree
 Plugin 'scrooloose/nerdtree'
 "Plugin corporate with nerdTree
 Plugin 'Xuyuanp/nerdtree-git-plugin'
 "Plugin Tagbar
-"https://github.com/majutsushi/tagbar
 Plugin 'majutsushi/tagbar'
 "Plugin YCM
-"https://github.com/Valloric/YouCompleteMe
 Plugin 'Valloric/YouCompleteMe'
-"Plugin 'file:///home/karlh/.vim/bundle/YouCompleteMe'
 "Plugin tern_for_vim
 Plugin 'ternjs/tern_for_vim'
-"Plugin pair branket
-"Plugin 'file:///home/karlh/.vim/bundle/auto-pair'
-"Plugin 'jiangmiao/auto-pair'
 "Plugin vim-startify
 Plugin 'mhinz/vim-startify'
 "Plugin 'artur-shaik/vim-javacomplete2'
@@ -166,6 +167,11 @@ Plugin 'artur-shaik/vim-javacomplete2'
 Plugin 'xuhdev/SingleCompile'
 "Plugin 'othree/xml.vim'
 Plugin 'othree/xml.vim'
+Plugin 'Raimondi/delimitMate'
+"rainbow bracket
+Plugin 'luochen1990/rainbow'
+"indent line
+Plugin 'Yggdroot/indentLine'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
@@ -209,13 +215,3 @@ function! SamePair(char)
                 return a:char
         endif
 endf
-
-inoremap ( <c-r>=AutoPair('(', ')')<CR>
-inoremap ) <c-r>=ClosePair(')')<CR>
-inoremap { <c-r>=AutoPair('{', '}')<CR>
-inoremap } <c-r>=ClosePair('}')<CR>
-inoremap [ <c-r>=AutoPair('[', ']')<CR>
-inoremap ] <c-r>=ClosePair(']')<CR>
-inoremap " <c-r>=SamePair('"')<CR>
-inoremap ' <c-r>=SamePair("'")<CR>
-inoremap ` <c-r>=SamePair('`')<CR>
