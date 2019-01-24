@@ -3,13 +3,17 @@ set shiftwidth=4  "autoindent's length
 set softtabstop=4 "change the length of the tab by this 
 set tabstop=4    "set the length of tab
 set autoindent	 "autoindent
-set textwidth=79 "the characters showed in one line
+"set textwidth=79 "the characters showed in one line
 set fileformat=unix
 set showmatch	 "highlight matching parentheses
 set incsearch	 "show the result of search inmediately
 set hlsearch	 "highlight the result
 set encoding=utf-8  "setting for YCM
 set foldmethod=syntax	"set the fold function method to fold by syntax of
+"" try
+"set re=1
+"set ttyfast
+"set lazyredraw
 
 "keymap settings
 "differences between map,nnoremap,inoremap,vnoremap
@@ -34,15 +38,21 @@ nnoremap <leader>2 :2gt
 nnoremap <leader>3 :3gt
 nnoremap <leader>c zc
 nnoremap <leader>o zo
+"nnoremap jd 20j
 "settings for singleCompile
 nmap <F9> :SCCompile<cr>
 nmap <F10> :SCCompileRun<cr>
+nmap <leader>/ <Plug>DashSearch
+nmap <leader>g <Plug>DashGlobalSearch
+
+let g:JavaComplete_JavaCompiler="/Library/Java/JavaVirtualMachines/jdk-11.0.1.jdk/Contents/Home"
 
 "some basic configure
 set nocompatible        " close compatible mode
 filetype plugin on      " load filetype-specific plugin
 filetype indent on      " load filetype-specific indent files
-set relativenumber      " show relative line number
+"set relativenumber      " show relative line number
+set number
 set cursorline          " highlight current line
 set wildmenu            " visual autocomplete for command menu
 set lazyredraw          " redraw only when we need to.
@@ -113,7 +123,7 @@ autocmd FileType java setlocal omnifunc=javacomplete#Complete
 "Above is customized by Karl-Han
 filetype off                  " required
 
-" set the runtime path to include Vundle and initialize
+"set the runtime path to include Vundle and initialize
 set rtp+=~/.vim/bundle/Vundle.vim
 call vundle#begin()
 " alternatively, pass a path where Vundle should install plugins
@@ -156,6 +166,7 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 Plugin 'majutsushi/tagbar'
 "Plugin YCM
 "https://github.com/Valloric/YouCompleteMe
+
 Plugin 'Valloric/YouCompleteMe'
 "Plugin 'file:///home/karlh/.vim/bundle/YouCompleteMe'
 "Plugin tern_for_vim
@@ -177,6 +188,12 @@ Plugin 'Raimondi/delimitMate'
 Plugin 'luochen1990/rainbow'
 "indent line
 Plugin 'Yggdroot/indentLine'
+"Dash for vim
+Plugin 'rizzatti/dash.vim'
+" coc.vim
+"Plugin 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+" Assembly indent
+Plugin 'philj56/vim-asm-indent'
 
 " All of your Plugins must be added before the following line
 call vundle#end()            " required
