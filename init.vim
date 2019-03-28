@@ -10,10 +10,6 @@ set incsearch	 "show the result of search inmediately
 set hlsearch	 "highlight the result
 set encoding=utf-8  "setting for YCM
 set foldmethod=syntax	"set the fold function method to fold by syntax of
-"" try
-"set re=1
-"set ttyfast
-"set lazyredraw
 
 "keymap settings
 "differences between map,nnoremap,inoremap,vnoremap
@@ -26,24 +22,23 @@ nnoremap <leader>h :sp
 nnoremap <leader>w :w<CR>
 "stop highlighting
 nnoremap <leader>H :nohl<CR>
-""matching parentheses
-"inoremap ( ()<LEFT>
-"inoremap [ []<LEFT>
-"inoremap { {}<LEFT>
-"inoremap " ""<LEFT>
-"inoremap ' ''<LEFT>
 "tab settings
 nnoremap <leader>1 :1gt
 nnoremap <leader>2 :2gt
 nnoremap <leader>3 :3gt
 nnoremap <leader>c zc
 nnoremap <leader>o zo
-"nnoremap jd 20j
 "settings for singleCompile
 nmap <F9> :SCCompile<cr>
 nmap <F10> :SCCompileRun<cr>
 nmap <leader>/ <Plug>DashSearch
 nmap <leader>g <Plug>DashGlobalSearch
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gr <Plug>(coc-references)
+nnoremap go <c-o>
+
+"nmap <leader>r :call coc#refresh()<CR>
 
 let g:JavaComplete_JavaCompiler="/Library/Java/JavaVirtualMachines/jdk-11.0.1.jdk/Contents/Home"
 
@@ -51,7 +46,7 @@ let g:JavaComplete_JavaCompiler="/Library/Java/JavaVirtualMachines/jdk-11.0.1.jd
 set nocompatible        " close compatible mode
 filetype plugin on      " load filetype-specific plugin
 filetype indent on      " load filetype-specific indent files
-"set relativenumber      " show relative line number
+set relativenumber      " show relative line number
 set number
 set cursorline          " highlight current line
 set wildmenu            " visual autocomplete for command menu
@@ -71,7 +66,7 @@ map <leader>t :NERDTreeToggle<CR>	"start or hide tree
 let NERDTreeShowLineNumbers=1	"show the number of the line
 let NERDTreeAutoCenter=1	"used with the one above
 let NERDTreeShowHidden=1	"show hidden files
-let NERDTreeWinSize=30		"set the width of the tree
+let NERDTreeWinSize=40		"set the width of the tree
 "nerdTree git settings
 let g:NERDTreeIndicatorMapCustom = {
     \ "Modified"  : "✹",
@@ -90,113 +85,91 @@ let g:NERDTreeIndicatorMapCustom = {
 set laststatus=2	"used to configure lightline
 set noshowmode		"hide the mode because lightline has included it
 
-""autoPairs settings
-"let g:AutoPairsFlyMode = 0
-"let g:AutoPairsShortcutBackInsert = '<M-b>'
-
-"YCM settings
-"let g:ycm_semantic_triggers =  {
-"			\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
-"			\ 'cs,lua,javascript': ['re!\w{2}'],
-"			\ }
-"let g:ycm_global_ycm_extra_conf = '/Users/karl-han/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
-"let g:ycm_seed_identifiers_with_syntax=1
-"let g:ycm_complete_in_comments = 1
-"let g:ycm_complete_in_strings = 1
-"let g:ycm_collect_identifiers_from_tags_files=1
-""let g:ycm_autoclose_preview_window_after_completion = 1
-"set completeopt=longest,menu	"set the menu
-"autocmd InsertLeave * if pumvisible() == 0|pclose|endif		"close menu as changed from insert to norm
-""color of the bar
-"highlight PMenu ctermfg=0 ctermbg=242 guifg=black guibg=darkgrey
-"highlight PMenuSel ctermfg=242 ctermbg=8 guifg=darkgrey guibg=black
-""something called gutter
-"set scl="no"
-
 "enable rainbow
 let g:rainbow_active = 1
 
 "java complete settings"
 autocmd FileType java setlocal omnifunc=javacomplete#Complete
 
-"
+"vim-racer
+au FileType rust nmap gd <Plug>(rust-def)
+au FileType rust nmap gs <Plug>(rust-def-split)
+au FileType rust nmap gx <Plug>(rust-def-vertical)
+au FileType rust nmap <leader>gd <Plug>(rust-doc)
+
 "Above is customized by Karl-Han
 filetype off                  " required
 
-"set the runtime path to include Vundle and initialize
-set rtp+=~/.vim/bundle/Vundle.vim
-call vundle#begin()
-" alternatively, pass a path where Vundle should install plugins
-"call vundle#begin('~/some/path/here')
-
-" let Vundle manage Vundle, required
-Plugin 'VundleVim/Vundle.vim'
+call plug#begin('~/.vim/bundle')
 
 " The following are examples of different formats supported.
-" Keep Plugin commands between vundle#begin/end.
+" Keep Plug commands between vundle#begin/end.
+
 " plugin on GitHub repo
-Plugin 'tpope/vim-fugitive'
+Plug 'tpope/vim-fugitive'
 " plugin from http://vim-scripts.org/vim/scripts.html
-" Plugin 'L9'
+" Plug 'L9'
 " Git plugin not hosted on GitHub
-Plugin 'git://git.wincent.com/command-t.git'
+Plug 'git://git.wincent.com/command-t.git'
 " git repos on your local machine (i.e. when working on your own plugin)
-"Plugin 'file:///home/gmarik/path/to/plugin'
+"Plug 'file:///home/gmarik/path/to/plugin'
 "
 " The sparkup vim script is in a subdirectory of this repo called vim.
 " Pass the path to set the runtimepath properly.
-Plugin 'rstacruz/sparkup', {'rtp': 'vim/'}
+Plug 'rstacruz/sparkup', {'rtp': 'vim/'}
 " Install L9 and avoid a Naming conflict if you've already installed a
 " different version somewhere else.
-" Plugin 'ascenator/L9', {'name': 'newL9'}
+" Plug 'ascenator/L9', {'name': 'newL9'}
 "
-"Plugin added by Karl-Han
-"Plugin ctrlp
-Plugin 'ctrlpvim/ctrlp.vim'
-"Plugin lightline
+"Plug added by Karl-Han
+"Plug ctrlp
+Plug 'ctrlpvim/ctrlp.vim'
+"Plug lightline
 "https://github.com/itchyny/lightline.vim
-Plugin 'itchyny/lightline.vim'
-"Plugin nerdtree
+Plug 'itchyny/lightline.vim'
+"Plug nerdtree
 "https://github.com/scrooloose/nerdtree
-Plugin 'scrooloose/nerdtree'
-"Plugin corporate with nerdTree
-Plugin 'Xuyuanp/nerdtree-git-plugin'
-"Plugin Tagbar
+Plug 'scrooloose/nerdtree', { 'on':  'NERDTreeToggle' }
+"Plug corporate with nerdTree
+Plug 'Xuyuanp/nerdtree-git-plugin'
+"Plug Tagbar
 "https://github.com/majutsushi/tagbar
-Plugin 'majutsushi/tagbar'
-"Plugin YCM
+Plug 'majutsushi/tagbar'
+"Plug YCM
 ""https://github.com/Valloric/YouCompleteMe
 "
-Plugin 'Valloric/YouCompleteMe'
-"Plugin 'file:///home/karlh/.vim/bundle/YouCompleteMe'
-"Plugin tern_for_vim
-Plugin 'ternjs/tern_for_vim'
-"Plugin pair branket
-"Plugin 'file:///home/karlh/.vim/bundle/auto-pair'
-"Plugin 'jiangmiao/auto-pair'
-"Plugin vim-startify
-Plugin 'mhinz/vim-startify'
-"Plugin 'artur-shaik/vim-javacomplete2'
-Plugin 'artur-shaik/vim-javacomplete2'
-"Plugin 'xuhdev/SingleCompile'
-Plugin 'xuhdev/SingleCompile'
-"Plugin 'othree/xml.vim'
-Plugin 'othree/xml.vim'
+"Plug 'Valloric/YouCompleteMe'
+"Plug 'file:///home/karlh/.vim/bundle/YouCompleteMe'
+"Plug tern_for_vim
+Plug 'ternjs/tern_for_vim'
+"Plug pair branket
+"Plug 'file:///home/karlh/.vim/bundle/auto-pair'
+"Plug 'jiangmiao/auto-pair'
+"Plug vim-startify
+Plug 'mhinz/vim-startify'
+"Plug 'artur-shaik/vim-javacomplete2'
+Plug 'artur-shaik/vim-javacomplete2'
+"Plug 'xuhdev/SingleCompile'
+Plug 'xuhdev/SingleCompile'
+"Plug 'othree/xml.vim'
+Plug 'othree/xml.vim'
 "delimit
-Plugin 'Raimondi/delimitMate'
+Plug 'Raimondi/delimitMate'
 "rainbow bracket
-Plugin 'luochen1990/rainbow'
+Plug 'luochen1990/rainbow'
 "indent line
-Plugin 'Yggdroot/indentLine'
+Plug 'Yggdroot/indentLine'
 "Dash for vim
-Plugin 'rizzatti/dash.vim'
+Plug 'rizzatti/dash.vim'
 " coc.vim
-Plugin 'neoclide/coc.nvim'
+Plug 'neoclide/coc.nvim', {'do': 'yarn install'}
 " Assembly indent
-Plugin 'philj56/vim-asm-indent'
+Plug 'philj56/vim-asm-indent'
+Plug 'racer-rust/vim-racer'
+Plug 'shirk/vim-gas'
 
-" All of your Plugins must be added before the following line
-call vundle#end()            " required
+" All of your Plugs must be added before the following line
+call plug#end()            " required
 filetype plugin indent on    " required
 " To ignore plugin indent changes, instead use:
 "filetype plugin on
@@ -237,3 +210,35 @@ function! SamePair(char)
                 return a:char
         endif
 endf
+
+" use <tab> for trigger completion and navigate to next complete item
+function! s:check_back_space() abort
+  let col = col('.') - 1
+  return !col || getline('.')[col - 1]  =~ '\s'
+endfunction
+
+inoremap <silent><expr> <TAB>
+      \ pumvisible() ? "\<C-n>" :
+      \ <SID>check_back_space() ? "\<TAB>" :
+      \ coc#refresh()
+
+" Auto compile
+map <F5> :call CompileRunGcc()<CR>
+func! CompileRunGcc()
+	exec "w"
+	if &filetype == 'c'
+		exec "!g++ % -o %<"
+		exec "! ./%<"
+	elseif &filetype == 'cpp'
+		exec "!g++ % -o %<"
+		exec "! ./%<"
+	elseif &filetype == 'java' 
+		exec "!javac %" 
+		exec "!java %<"
+	elseif &filetype == 'sh'
+		:!./%
+	elseif &filetype == 'py'
+		exec "!python %"
+		exec "!python %<"
+	endif
+endfunction
