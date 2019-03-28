@@ -95,23 +95,23 @@ set noshowmode		"hide the mode because lightline has included it
 "let g:AutoPairsShortcutBackInsert = '<M-b>'
 
 "YCM settings
-let g:ycm_semantic_triggers =  {
-			\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
-			\ 'cs,lua,javascript': ['re!\w{2}'],
-			\ }
-let g:ycm_global_ycm_extra_conf = '/Users/karl-han/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
-let g:ycm_seed_identifiers_with_syntax=1
-let g:ycm_complete_in_comments = 1
-let g:ycm_complete_in_strings = 1
-let g:ycm_collect_identifiers_from_tags_files=1
-"let g:ycm_autoclose_preview_window_after_completion = 1
-set completeopt=longest,menu	"set the menu
-autocmd InsertLeave * if pumvisible() == 0|pclose|endif		"close menu as changed from insert to norm
-"color of the bar
-highlight PMenu ctermfg=0 ctermbg=242 guifg=black guibg=darkgrey
-highlight PMenuSel ctermfg=242 ctermbg=8 guifg=darkgrey guibg=black
-"something called gutter
-set scl="no"
+"let g:ycm_semantic_triggers =  {
+"			\ 'c,cpp,python,java,go,erlang,perl': ['re!\w{2}'],
+"			\ 'cs,lua,javascript': ['re!\w{2}'],
+"			\ }
+"let g:ycm_global_ycm_extra_conf = '/Users/karl-han/.vim/bundle/YouCompleteMe/.ycm_extra_conf.py'
+"let g:ycm_seed_identifiers_with_syntax=1
+"let g:ycm_complete_in_comments = 1
+"let g:ycm_complete_in_strings = 1
+"let g:ycm_collect_identifiers_from_tags_files=1
+""let g:ycm_autoclose_preview_window_after_completion = 1
+"set completeopt=longest,menu	"set the menu
+"autocmd InsertLeave * if pumvisible() == 0|pclose|endif		"close menu as changed from insert to norm
+""color of the bar
+"highlight PMenu ctermfg=0 ctermbg=242 guifg=black guibg=darkgrey
+"highlight PMenuSel ctermfg=242 ctermbg=8 guifg=darkgrey guibg=black
+""something called gutter
+"set scl="no"
 
 "enable rainbow
 let g:rainbow_active = 1
@@ -165,8 +165,8 @@ Plugin 'Xuyuanp/nerdtree-git-plugin'
 "https://github.com/majutsushi/tagbar
 Plugin 'majutsushi/tagbar'
 "Plugin YCM
-"https://github.com/Valloric/YouCompleteMe
-
+""https://github.com/Valloric/YouCompleteMe
+"
 Plugin 'Valloric/YouCompleteMe'
 "Plugin 'file:///home/karlh/.vim/bundle/YouCompleteMe'
 "Plugin tern_for_vim
@@ -191,7 +191,7 @@ Plugin 'Yggdroot/indentLine'
 "Dash for vim
 Plugin 'rizzatti/dash.vim'
 " coc.vim
-"Plugin 'neoclide/coc.nvim', {'tag': '*', 'do': { -> coc#util#install()}}
+Plugin 'neoclide/coc.nvim'
 " Assembly indent
 Plugin 'philj56/vim-asm-indent'
 
